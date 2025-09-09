@@ -1,0 +1,469 @@
+<div class="contentor">
+
+    <!-- topo ----->
+    <div class="topo">
+        
+        <div class="topo_titulo_sistema">
+             <app-titulo-app></app-titulo-app>
+         </div>
+ 
+         <div class="topo_log_info">
+             topo_log_info | 
+             <button id="botao_log_off_topo" title="Sair do sistema">
+                 <i class="pi pi-sign-out"></i> 
+             </button>
+         </div>      
+ 
+     </div>
+    <!-- fim topo-->
+
+
+    <!-- menu ------>
+    <div class="menu_horizontal">
+        menu_horizontal
+    </div>
+
+    <div class="menu_vertical">
+        menu_vertical
+    </div>
+    <!-- fim menu -->
+
+
+
+    <!-- CENTRO ------>
+     <form>
+        
+        <!-- logotipo da pagina -->
+        <div class="centro_formulario_listagem">
+            
+            <div class="logo_titulo">
+                <img src="assets/grupos.png" alt="">
+            </div>
+
+            <div class="logo_titulo">
+                <h3>{{titulo}}</h3>
+            </div>
+
+        </div>
+        <!-- fim logotipo da pagina -->
+
+
+        <!-- FORMULARIO ------------------------------------>
+        <div class="centro_formulario_listagem" *ngIf="formulario">
+
+            <!-- botões novo e cancelar ------>
+            <div class="pagina" *ngIf="cancelarNovoBT">
+                <button title="Cancelar Novo grupo" id="cancelar_novo_btn" *ngIf="cancelarNovoBT" (click)="func_cancelar_novo_registro()">
+                    <i class="pi pi-times-circle"></i> 
+                </button>
+            </div>
+            <div class="pagina" *ngIf="novoBT">
+                <button title="Novo grupo" id="novo_btn" *ngIf="novoBT" (click)="func_novo_registro()">
+                    <i class="pi pi-file-plus"></i> 
+                </button>
+            </div>
+            <!-- fim botões novo e cancelar -->
+
+
+            <!-- o formulario para grupo --------->
+            <div class="pagina">
+
+                <!-- rotulos e campos ------>
+                <div class="pagina_linha">
+
+                    <div class="formulario">
+                        <div class="formulario_rotulo">Nome:</div>
+                        <div class="formulario_campo">
+                            <textarea name="nome_grupoTXT"
+                                rows="5"
+                                cols="24" 
+                                [style]="{'padding': '5px', 'margin': '0px'}"
+                                pInputTextarea 
+                                [(ngModel)]="grupo.nome" 
+                                placeholder=" - " 
+                                autofocus 
+                                [autoResize]="false">
+                            </textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pagina_linha">
+                    
+                    <div class="formulario">
+                        <div class="formulario_rotulo">Visibilidade:</div>
+                        <div class="formulario_campo">
+                            
+                            <p-radioButton 
+                                name="visibilidadeRB1" 
+                                value="S" 
+                                [(ngModel)]="grupo.visibilidade" 
+                                inputId="Visibilidade_sim" />
+                                <label for="Visibilidade_sim" class="ml-2">
+                                    Sim
+                                </label>
+
+                            <p-radioButton 
+                                name="visibilidadeRB2" 
+                                value="N" 
+                                [(ngModel)]="grupo.visibilidade" 
+                                inputId="Visibilidade_nao" />
+                                <label for="Visibilidade_nao" class="ml-2">
+                                  Não
+                                </label>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- fim rotulos e campos -->
+
+
+                <!-- botões ---------------->
+                <div class="pagina_linha">
+                    
+                    <!--@if (func_verifica_botao_inserir_disabled() == true) {                                               
+                        <button title="Inserir grupo" id="inserir_btn_disabled" *ngIf="inserirBT">
+                            <i class="pi pi-save"></i> Inserir                                    
+                        </button>
+                    } @else {                                 
+                        <button title="Inserir grupo" id="inserir_btn" *ngIf="inserirBT" 
+                                (click)="func_inserir(); func_cancelar_novo_registro(); mostraDialogConfirmaInsercao = true;">
+                            <i class="pi pi-save"></i> Inserir                                    
+                        </button>
+                    }
+
+                    <button title="Alterar grupo" id="alterar_btn" *ngIf="alterarBT"
+                            (click)="mostraDialogAlterar = true">
+                        <i class="pi pi-file-edit"></i> Alterar
+                    </button> 
+
+                    <button title="Eliminar grupo" id="eliminar_btn" *ngIf="eliminarBT"
+                            (click)="func_verifica_uso_de_grupoId(grupo);">
+                        <i class="pi pi-trash"></i> Eliminar
+                    </button>
+
+                    <button title="Cancelar tudo" id="cancelar_btn" (click)="func_cancelar_novo_registro()">
+                        <i class="pi pi-times-circle"></i> Cancelar
+                    </button>-->
+
+                </div>
+
+
+
+                <div class="pagina_linha">
+                    <div class="formulario">
+                        <div class="formulario_rotulo"></div>
+                        <div class="formulario_campo">
+
+                            @if (func_verifica_botao_inserir_disabled() == true) {                                               
+                                <button title="Inserir grupo" id="inserir_btn_disabled" *ngIf="inserirBT">
+                                    <i class="pi pi-save"></i> Inserir                                    
+                                </button>
+                            } @else {                                 
+                                <button title="Inserir grupo" id="inserir_btn" *ngIf="inserirBT" 
+                                        (click)="func_inserir(); func_cancelar_novo_registro(); mostraDialogConfirmaInsercao = true;">
+                                    <i class="pi pi-save"></i> Inserir                                    
+                                </button>
+                            }
+
+                            <button title="Alterar grupo" id="alterar_btn" *ngIf="alterarBT"
+                                    (click)="mostraDialogAlterar = true">
+                                <i class="pi pi-file-edit"></i> Alterar
+                            </button> 
+
+                            <button title="Eliminar grupo" id="eliminar_btn" *ngIf="eliminarBT"
+                                    (click)="func_verifica_uso_de_grupoId(grupo);">
+                                <i class="pi pi-trash"></i> Eliminar
+                            </button>
+
+                            <button title="Cancelar tudo" id="cancelar_btn" (click)="func_cancelar_novo_registro()">
+                                <i class="pi pi-times-circle"></i> Cancelar
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- fim botões ------------>
+
+            </div>
+            <!-- fim para formulario para grupo -->
+            
+
+        </div>
+        <!-- FIM FORMULARIO -------------------------------->
+
+
+
+        <!-- LISTAGEM ---------------------------------------->
+        <div class="centro_formulario_listagem" *ngIf="listagem">
+
+            <!-- botões novo e cancelar -->
+            <div class="pagina" *ngIf="novoBT">
+                <button title="Novo grupo" id="novo_btn" *ngIf="novoBT" (click)="func_novo_registro()">
+                    <i class="pi pi-file-plus"></i> 
+                </button>
+            </div>
+            <div class="pagina" *ngIf="cancelarNovoBT">
+                <button title="Cancelar Novo grupo" id="cancelar_novo_btn" *ngIf="cancelarNovoBT" (click)="func_cancelar_novo_registro()">
+                    <i class="pi pi-times-circle"></i> 
+                </button>
+            </div>
+            <!-- fim botões novo e cancelar -->
+
+
+            <!-- a listagem de grupos --------->
+            <div class="pagina">
+
+                @if (editarRG == false) {
+
+                    <div class="altura_dinamica_listagem">
+
+                        <p-table #dtGrupos 
+                                [value]="listaGrupos_OrderByIdDesc" 
+                                [scrollable]="true"  
+                                scrollHeight="flex"
+                                [tableStyle]="{'min-width': '380px', 'font-size': '12px'}"                                
+                                selectionMode="single" 
+                                [(selection)]="grupoSelecionado">
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th id="label_listagem">
+                                            NOME                                         
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th><hr></th>
+                                    </tr>
+                                    <tr>
+                                        <p-columnFilter type="text" 
+                                                        field="nome"
+                                                        placeholder="Procurar por nome"
+                                                        ariaLabel="Filter nome">
+                                        </p-columnFilter>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-grupo>
+                                    <tr [pSelectableRow]="grupo" (click)="func_seleciona_registo_por_objecto(grupo)">
+                                        <td id="td_listagem">{{grupo.nome}}</td>
+                                    </tr>                            
+                                </ng-template>
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td>
+                                            <div class="semCadastro">Sem grupos cadastrados</div> 
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                        </p-table>
+
+                    </div>                   
+
+                
+                }@else if(editarRG == true){
+
+                    <div class="altura_dinamica_listagem">
+
+                        <p-table #dtGrupos 
+                                [value]="listaGrupos_OrderByIdDesc" 
+                                [scrollable]="true"  
+                                scrollHeight="scrollHeight + 'px'"
+                                [tableStyle]="{'min-width': '380px', 'font-size': '12px'}"                                
+                                selectionMode="single" 
+                                [(selection)]="grupoSelecionado"
+                                [globalFilterFields]="['nome', 'visibilidade']">
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th id="label_listagem">
+                                            NOME                                        
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th><hr></th>
+                                    </tr>
+                                    <tr>
+                                        <p-columnFilter type="text" 
+                                                        field="nome"
+                                                        placeholder="Procurar por Nome"
+                                                        ariaLabel="Filter nome">
+                                        </p-columnFilter>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-grupo>
+                                    <tr [pSelectableRow]="grupo">
+                                        <td id="td_listagem">{{grupo.nome}}</td>
+                                    </tr>                            
+                                </ng-template>
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td>
+                                            <div class="semCadastro">Sem grupos cadastrados</div> 
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                        </p-table>
+
+                    </div>                
+
+                }
+
+            </div>
+            <!-- fim da listagem de grupos ---->
+
+        </div>
+        <!-- FIM LISTAGEM ---------------------------------->
+
+     </form>
+    <!-- FIM CENTRO -->
+
+</div>
+
+
+
+<!-- base -------->
+<div class="base_titulo_sistema"> 
+    <app-titulo-app></app-titulo-app>
+</div>
+
+<div class="base_log_info"> 
+    base_log_info
+</div>
+
+<app-base></app-base>
+<!-- fim base ---->
+
+
+
+
+
+
+
+
+
+<!-- dialogs de inserção ---------------------------------------------->
+<p-dialog header="Confirmação de inserção" 
+          [modal]="true" 
+          [(visible)]="mostraDialogConfirmaInsercao" 
+          [style]="{ width: '25rem', fontSize: '13px', fontFamily: 'Inter var, sans-serif' }">
+            
+        <span class="p-text-secondary block mb-8">Grupo inserido com Sucesso!</span>
+
+        <div class="flex justify-content-end gap-2">
+            
+            <button title="Cancelar alterar grupo" id="ok_btn" (click)="mostraDialogConfirmaInsercao = false">
+                <i class="pi pi-check-square"></i> Ok
+            </button>
+
+        </div>
+
+</p-dialog>
+
+
+
+<!-- dialogs de alteração ---------------------------------------------->
+<p-dialog header="Verificação de alteração" 
+          [modal]="true" 
+          [(visible)]="mostraDialogAlterar" 
+          [style]="{ width: '25rem', fontSize: '13px', fontFamily: 'Inter var, sans-serif' }">
+            
+        <span class="p-text-secondary block mb-8">Tem certeza que deseja alterar esse grupo?</span>
+
+        <div class="flex justify-content-end gap-2">
+            
+            <button title="Cancelar alterar grupo" id="nao_btn" (click)="mostraDialogAlterar = false">
+                <i class="pi pi-times"></i> Não
+            </button>
+
+            <button title="Alterar grupo" id="sim_btn" 
+                    (click)="mostraDialogAlterar = false; func_alterar(); mostraDialogConfirmaAlteracao = true;">
+                <i class="pi pi-check"></i> Sim 
+            </button>
+
+        </div>
+
+</p-dialog>
+
+<p-dialog header="Confirmação de alteração" 
+          [modal]="true" 
+          [(visible)]="mostraDialogConfirmaAlteracao" 
+          [style]="{ width: '25rem', fontSize: '13px', fontFamily: 'Inter var, sans-serif' }">
+            
+        <span class="p-text-secondary block mb-8">Grupo alterado com Sucesso!</span>
+
+        <div class="flex justify-content-end gap-2">
+            
+            <button title="Cancelar alterar grupo" id="ok_btn" 
+                    (click)="mostraDialogConfirmaAlteracao = false;">
+                <i class="pi pi-check-square"></i> Ok
+            </button>
+
+        </div>
+
+</p-dialog>
+
+
+<!-- dialogs de eliminação ---------------------------------------------->
+<p-dialog header="Verificação de eliminação" 
+          [modal]="true" 
+          [(visible)]="mostraDialogEliminar" 
+          [style]="{ width: '25rem', fontSize: '13px', fontFamily: 'Inter var, sans-serif' }">
+            
+        <span class="p-text-secondary block mb-8">Tem certeza que deseja eliminar esse grupo?</span>
+
+        <div class="flex justify-content-end gap-2">
+            
+            <button title="Cancelar elimnaçao de grupo" id="nao_btn" (click)="mostraDialogEliminar = false">
+                <i class="pi pi-times"></i> Não
+            </button>
+
+            <button title="Eliminar grupo" id="sim_btn"
+                    (click)="mostraDialogEliminar = false; func_eliminar(); mostraDialogConfirmaEliminacao = true">
+                <i class="pi pi-check"></i> Sim 
+            </button>
+
+        </div>
+
+</p-dialog>
+
+<p-dialog header="Confirmação de eliminação" 
+          [modal]="true" 
+          [(visible)]="mostraDialogConfirmaEliminacao" 
+          [style]="{ width: '25rem', fontSize: '13px', fontFamily: 'Inter var, sans-serif' }">
+            
+        <span class="p-text-secondary block mb-8">Grupo alterado com Sucesso!</span>
+
+        <div class="flex justify-content-end gap-2">
+            
+            <button title="Cancelar alterar grupo" id="ok_btn" (click)="mostraDialogConfirmaEliminacao = false">
+                <i class="pi pi-check-square"></i> Ok
+            </button>
+
+        </div>
+
+</p-dialog>
+
+<p-dialog header="Impossibilidade de eliminação" 
+          [modal]="true" 
+          [(visible)]="mostraDialogImpossibilidadeEliminacao" 
+          [style]="{ width: '25rem', fontSize: '13px', fontFamily: 'Inter var, sans-serif' }">
+            
+        <span class="p-text-secondary block mb-8">{{mensagemImpossibilidadeEliminacao}}</span>
+
+        <div class="flex justify-content-end gap-2">
+            
+            <button title="Cancelar alterar grupo" id="ok_btn" (click)="mostraDialogImpossibilidadeEliminacao = false">
+                <i class="pi pi-check-square"></i> Ok
+            </button>
+
+        </div>
+
+</p-dialog>

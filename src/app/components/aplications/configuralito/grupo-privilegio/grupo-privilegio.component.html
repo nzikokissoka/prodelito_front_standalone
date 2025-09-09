@@ -1,0 +1,490 @@
+<!-- contentor ------------------------------>
+<div class="contentor">
+
+    <!-- topo ----->
+    <div class="topo">
+        
+        <div class="topo_titulo_sistema">
+             <app-titulo-app></app-titulo-app>
+         </div>
+ 
+         <div class="topo_log_info">
+             topo_log_info | 
+             <button id="botao_log_off_topo" title="Sair do sistema">
+                 <i class="pi pi-sign-out"></i> 
+             </button>
+         </div>      
+ 
+     </div>
+    <!-- fim topo-->
+
+
+
+    <!-- menu ------>
+    <div class="menu_horizontal">
+        menu_horizontal
+    </div>
+
+    <div class="menu_vertical">
+        menu_vertical
+    </div>
+    <!-- fim menu -->
+
+
+    <!-- logotipo da pagina -->
+    <div class="centro_formulario_logo">
+            
+        <div class="logo_titulo">
+            <img src="assets/grupo_privilegios.png" alt="" width="63" height="64">
+        </div>
+
+        <div class="logo_titulo">
+            <h3>{{titulo_gp}}</h3>
+        </div>
+
+    </div>
+    <!-- fim logotipo da pagina -->
+
+
+
+    <!-- CENTRO ------------------>
+    <form>
+        
+        <div class="centro_formulario_listagem">
+
+            <div class="altura_dinamica_listagem2">
+
+                <div class="pagina" *ngIf="cancelarTudo">
+                    <button title="Cancelar Tudo" id="cancelar_novo_btn" (click)="func_cancelar_tudo()">
+                        <i class="pi pi-times-circle"></i> 
+                    </button>
+                </div>
+
+                <div class="pagina" *ngIf="listagem_item_sistema">
+                    <button title="Voltar para listagem de sistemas" 
+                            id="cancelar_tudo_btn"  
+                            (click)="func_cancelar_de_retorno()">
+                        <i class="pi pi-undo"></i>  
+                    </button>
+                </div>
+                
+                <!-- listagem de grupos ------------------------------------------>
+                <p-panel header="Listagem de grupos" *ngIf="listagem_grupo">
+
+                    <p-table #dtGrupos 
+                                    [value]="listaGrupos" 
+                                    [scrollable]="true"  
+                                    scrollHeight="flex"
+                                    [tableStyle]="{'min-width': '200px', 'font-size': '12px'}"                                
+                                    selectionMode="single" 
+                                    [(selection)]="grupoSelecionado"
+                                    [globalFilterFields]="['nome']">
+                                
+                                    <ng-template pTemplate="caption">
+                                        <div class="flex">
+                                            
+                                            <input 
+                                                pInputText 
+                                                id="input_global_filter"
+                                                type="text" 
+                                                (input)="dtGrupos.filterGlobal($any($event.target).value, 'contains')" 
+                                                placeholder="Procurar por palavras" />
+                                        </div>
+                                    </ng-template>
+    
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th style="width:2%; padding: 5px;">#</th>
+                                            <th pSortableColumn="nome">
+                                                Nome grupo<p-sortIcon field="nome" />
+                                            </th>                                        
+                                        </tr>
+                                    </ng-template>
+    
+                                    <ng-template pTemplate="body" let-grupo>
+                                        <tr [pSelectableRow]="grupo" 
+                                            (click)="func_seleciona_sistemas(grupo)" 
+                                            title="Clique para selecionar esse registo">
+                                                <td></td>
+                                                <td id="td_listagem">{{grupo.nome}}</td>                                                
+                                            </tr>
+                                    </ng-template>
+    
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="semCadastro">Sem grupos cadastrados</div> 
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                
+                            </p-table>
+    
+                </p-panel>
+                <!-- fim listagem de grupos -------------------------------------->
+
+
+                <!-- listagem de sistemas ---------------------------------------->
+                <p-panel header="Grupo: {{this.grupo.nome}}" *ngIf="listagem_sistema">
+
+                    <p-panel header="Listagem de sistemas">
+
+                        <p-table #dtSistemas 
+                                [value]="listaSistemas" 
+                                [scrollable]="true"  
+                                scrollHeight="flex"
+                                [tableStyle]="{'min-width': '230px', 'font-size': '12px'}"                                
+                                selectionMode="single" 
+                                [(selection)]="sistemaSelecionado"
+                                [globalFilterFields]="['abreviada', 'descricao']">
+
+                                <ng-template pTemplate="caption">
+                                    <div class="flex">                                        
+                                        <input 
+                                            pInputText 
+                                            id="input_global_filter2"
+                                            type="text" 
+                                            (input)="dtSistemas.filterGlobal($any($event.target).value, 'contains')" 
+                                            placeholder="Procurar por abreviada | descrição" />
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width:2%; padding: 5px;">#</th>
+                                        <th pSortableColumn="abreviada">
+                                            Nome sistema 11<p-sortIcon field="abreviada" />
+                                        </th>                                        
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-sistemas>
+                                    <tr [pSelectableRow]="sistemas"
+                                        (click)="func_seleciona_todos_item_sistema(sistemas);" 
+                                        title="Clique para selecionar esse registo">
+                                            <td></td>
+                                            <td id="td_listagem">{{sistemas.abreviada}} - {{sistemas.descricao}}</td>                                                
+                                        </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="semCadastro">Sem sistemas cadastrados</div> 
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+
+                    </p-panel>
+
+                </p-panel>
+                <!-- fim listagem de sistemas ------------------------------------>
+
+
+                <!-- listagem de ítend de sistemas ------------------------------->
+                <p-panel header="Grupo: {{this.grupo.nome}}" *ngIf="listagem_item_sistema">
+
+                    <p-panel header="Sistema: {{this.sistema.abreviada}}">
+
+                        <div class="pagina" *ngIf="novo_item_sistema">
+                            <button title="Novo privilegio" 
+                                    id="novo_btn" 
+                                    (click)="func_novo_privilegio()">
+                                <i class="pi pi-file-plus"></i> 
+                            </button>
+                        </div>
+                        
+                        <div class="pagina" *ngIf="cancelaNovoPrivilegio">
+                            <button title="Cancelar novo privilégio" id="cancelar_novo_btn" 
+                                    (click)="func_cancela_novo_privilegio()">
+                                <i class="pi pi-times-circle"></i> 
+                            </button>
+                        </div>
+
+                        <p-table #dtSistemas 
+                                [value]="listaGrupoPrivilegio" 
+                                [scrollable]="true"  
+                                scrollHeight="flex"
+                                [tableStyle]="{'min-width': '800px', 'font-size': '12px'}"                                
+                                selectionMode="single" 
+                                [(selection)]="sistemaItemSelecionado"
+                                [globalFilterFields]="['descricao']" *ngIf="listagem_privilegio_item_sistema">
+
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <td colspan="9"><hr class="hr-style"></td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="th-item">ÍTEM</th>
+                                    <th colspan="6" class="th-centro">PRIVILÉGIOS</th>
+                                    <th rowspan="2" class="th-centro">VISIBILIDADE</th>
+                                </tr>
+                                <tr>
+                                    <th class="th-priv">NOVO</th>
+                                    <th>COPIAR</th>
+                                    <th>INSERIR</th>
+                                    <th>ALTERAR</th>
+                                    <th>ELIMINAR</th>
+                                    <th>PESQUISAR</th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-grupoPrivilegio>
+                                <tr [pSelectableRow]="grupoPrivilegio">
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="semCadastro">Sem privilégios de grupo cadastrados</div> 
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+
+                        <p-panel header="{{titulo_privilegio}}" 
+                                 [style]="{'min-width': '400px', 'font-size': '12px'}" 
+                                 *ngIf="formulario_privilegios">
+                            
+                            <div class="formulario">
+                                <div class="formulario_rotulo2">Ítem:</div>
+                                <div class="formulario_campo">
+                                    <select id="itemSistemaCbx"
+                                            name="itemSistemaCbx"
+                                            [(ngModel)]="grupoPrivilegio.sistema_modulo_caminho_id" 
+                                            (change)="func_item_sistema_selecionado($event)" 
+                                            class="select-itens">
+                                        <option value="none" selected>-</option>
+                                        <option *ngFor="let lista of listaItemSistemasPorGrupo" [value]="lista.id">
+                                            {{lista.descricao}}
+                                        </option>
+                                    </select>                                    
+                                </div>
+                            </div>
+
+                            <div class="formulario" *ngIf="mostrarPrivilegios">
+                                <div class="formulario_rotulo">Privilegios:</div>
+                                <div class="formulario_campo2">
+                                    
+                                    <div class="formulario_checkbox">
+                                        <div class="espaco-cbx">
+                                            <p-checkbox 
+                                                [(ngModel)]="grupoPrivilegio.novo"
+                                                (onChange)="func_verifica_grupo_privilegio($event)"
+                                                label="Novo" 
+                                                name="novoCbx" 
+                                                value="1" />
+                                        </div> 
+                                        <div class="espaco-cbx">
+                                            <p-checkbox 
+                                                [(ngModel)]="grupoPrivilegio.copiar"
+                                                (onChange)="func_verifica_grupo_privilegio($event)"
+                                                label="Copiar" 
+                                                name="copiarCbx" 
+                                                value="1" />
+                                        </div>   
+                                        <div class="espaco-cbx">
+                                            <p-checkbox 
+                                                [(ngModel)]="grupoPrivilegio.pesquisar"
+                                                (onChange)="func_verifica_grupo_privilegio($event)"
+                                                label="Pesquisar" 
+                                                name="pesquisarCbx" 
+                                                value="1" />
+                                        </div>                                   
+                                    </div>
+
+                                    <div class="formulario_checkbox">
+                                        <div class="espaco-cbx2">
+                                            <p-checkbox 
+                                                [(ngModel)]="grupoPrivilegio.salvar"
+                                                (onChange)="func_verifica_grupo_privilegio($event)"
+                                                label="Inserir" 
+                                                name="inserirCbx" 
+                                                value="1" /> 
+                                        </div>
+                                        <div style="margin-right: 18px;">
+                                            <p-checkbox 
+                                                [(ngModel)]="grupoPrivilegio.editar"
+                                                (onChange)="func_verifica_grupo_privilegio($event)"
+                                                label="Alterar" 
+                                                name="alterarCbx" 
+                                                value="1" />
+                                        </div>
+                                        <div>
+                                            <p-checkbox 
+                                                [(ngModel)]="grupoPrivilegio.deletar"
+                                                (onChange)="func_verifica_grupo_privilegio($event)"
+                                                label="Eliminar" 
+                                                name="eliminarCbx2" 
+                                                value="1" />
+                                        </div>                              
+                                    </div>                                  
+
+                                </div>
+                            </div>
+
+                            <div class="formulario" *ngIf="func_verifica_grupo_privilegio(grupoPrivilegio)">
+
+                                <div class="formulario_rotulo_botao_invisivel"></div>
+                                <div class="formulario_campo">
+                                    
+                                    <div style="margin-top: 4px;">
+
+                                        <button title="Inserir novos privilégios" 
+                                                id="inserir_btn"
+                                                *ngIf="botaoNovoPrivilegio"
+                                                (click)="func_inserir(); func_cancela_novo_privilegio(); mostraDialogConfirmaInsercao = true;">
+                                            <i class="pi pi-save"></i> Inserir                                    
+                                        </button>
+
+                                        <button title="Alterar grupo" 
+                                                id="alterar_btn" 
+                                                *ngIf="botaoAlterarPrivilegio">
+                                            <i class="pi pi-file-edit"></i> Alterar
+                                        </button> <!--(click)="mostraDialogAlterar = true"-->
+
+                                        <button title="Eliminar grupo" 
+                                                id="eliminar_btn" 
+                                                *ngIf="botaoEliminarPrivilegio">
+                                            <i class="pi pi-trash"></i> Eliminar
+                                        </button> <!--(click)="func_verifica_uso_de_grupoId(grupo);"-->
+
+                                        <button title="Cancelar novo privilégio" 
+                                                id="cancelar_btn"
+                                                (click)="func_cancela_novo_privilegio()"                                                  
+                                                *ngIf="botaoCancelarNovoPrivilegio">
+                                            <i class="pi pi-times-circle"></i> Cancelar
+                                        </button> <!--(click)="func_cancelar_novo_registro()"-->
+
+                                    </div>                                  
+
+                                </div>
+
+                            </div>
+
+
+                            <!--<div class="formulario">
+                                <div class="formulario_rotulo">Privilegios:</div>
+                                <div class="formulario_campo2">
+
+                                    <div class="espaco-cbx">
+                                        <p-checkbox 
+                                            [(ngModel)]="grupoPrivilegio.novo"
+                                            label="Novo" 
+                                            name="novoCbx" 
+                                            value="1" />
+                                    </div>                                  
+
+                                    <div class="espaco-cbx">
+                                        <p-checkbox 
+                                            [(ngModel)]="grupoPrivilegio.copiar"
+                                            label="Copiar" 
+                                            name="copiarCbx" 
+                                            value="1" />
+                                    </div>
+                                    
+                                    <div class="espaco-cbx">
+                                        <p-checkbox 
+                                            [(ngModel)]="grupoPrivilegio.salvar"
+                                            label="Inserir" 
+                                            name="inserirCbx" 
+                                            value="1" /> 
+                                    </div>                                                                      
+
+                                </div>
+                            </div>  
+                            
+                            <div class="formulario">
+                                <div class="formulario_rotulo_botao_invisivel"></div>
+                                <div class="formulario_campo2">
+                                    <div class="espaco-cbx2">
+                                        <p-checkbox 
+                                            [(ngModel)]="grupoPrivilegio.editar"
+                                            label="Alterar" 
+                                            name="alterarCbx" 
+                                            value="1" />
+                                    </div>                                    
+                                    <div class="espaco-cbx2">
+                                        <p-checkbox 
+                                            [(ngModel)]="grupoPrivilegio.deletar"
+                                            label="Eliminar" 
+                                            name="eliminarrCbx2" 
+                                            value="1" />
+                                    </div>
+
+                                    <div class="espaco-cbx">
+                                        <p-checkbox 
+                                            [(ngModel)]="grupoPrivilegio.pesquisar"
+                                            label="Pesquisar" 
+                                            name="pesquisarCbx" 
+                                            value="1" />
+                                    </div>
+                                </div>
+                            </div>-->
+
+                        </p-panel>                      
+
+                    </p-panel>
+
+                </p-panel>
+                <!-- fim listagem de ítend de sistemas --------------------------->
+
+
+            </div>
+            
+             
+        </div>         
+
+
+    </form>
+    <!-- FIM CENTRO -------------->
+
+    
+
+</div>
+<!-- fim contentor -------------------------->
+
+
+
+<!-- base ----------------------------------->
+<div class="base_titulo_sistema"> 
+    <app-titulo-app></app-titulo-app>
+</div>
+
+<div class="base_log_info"> 
+    base_log_info
+</div>
+
+<app-base></app-base>
+<!-- fim base ------------------------------>
+
+
+
+
+<!-- dialogs ------------------------------->
+<!-- inserção -------------------->
+<p-dialog header="Confirmação de inserção" 
+    [modal]="true" 
+    [(visible)]="mostraDialogConfirmaInsercao" 
+    [style]="{ width: '25rem', fontSize: '13px', fontFamily: 'Inter var, sans-serif' }">
+    
+    <span class="p-text-secondary block mb-8">Privilegio inserido com Sucesso!</span>
+    <div class="flex justify-content-end gap-2">    
+        <button title="Cancelar alterar grupo" id="ok_btn" (click)="mostraDialogConfirmaInsercao = false">
+            <i class="pi pi-check-square"></i> Ok
+        </button>
+    </div>
+
+</p-dialog>

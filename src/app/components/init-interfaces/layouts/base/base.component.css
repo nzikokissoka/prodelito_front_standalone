@@ -1,0 +1,82 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;    
+}
+
+.contentor_base{
+    /*border: 1px solid black;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: end;*/
+
+    border: 1px solid black;
+    font-size: 12px;
+    font-family: "Inter var", sans-serif;
+    color: #655d5d;
+    height: 20px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.botao_logoff_base{
+    border: 1px solid #3a073a;       
+    height: 5vh;
+    width: 30px;
+
+    display: none; 
+}
+
+
+
+
+/*IDS *************************/
+#botao_log_off_topo, #botao_log_off_base{
+    border: 1px solid gray;
+    color: brown;
+    height: 4.5vh;    
+    border-radius: 4px;
+}
+
+#botao_log_off_topo{
+    width: 50px;
+}
+
+#botao_log_off_base{
+    width: 100%;
+}
+
+#botao_log_off_topo:hover, #botao_log_off_base:hover{
+    border: 1px solid brown;    
+    background-color: brown;
+    color: white;
+    cursor: pointer;
+}
+
+#botao_log_off_topo:active, #botao_log_off_base:active{
+    transform: translateY(2px);
+    color: #fefe04;   
+}
+
+#botao_log_off_topo:active, #botao_log_off_base:active{
+    box-shadow: 0 5px 10px #d76868;
+}
+
+
+
+
+
+
+/** MÉDIA **/
+@media only screen and (max-width: 600px) {
+
+    .botao_logoff_base{
+        display: block;
+        width: 100%;         
+    }
+    
+}

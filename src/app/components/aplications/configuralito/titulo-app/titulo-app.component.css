@@ -1,0 +1,11 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-size: 12px;
+    font-family: "Inter var", sans-serif;
+    color: #655d5d;
+}
